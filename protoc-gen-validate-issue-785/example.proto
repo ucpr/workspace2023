@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package gen;
+
+import "validate.proto";
+
+option go_package = "github.com/ucpr/workspace2023/protoc-gen-validate-issue-785/gen";
+
+message TestMessage {
+  map<string, string> example = 1 [(validate.rules).map.keys.string = {
+    in: [
+      "missing",
+      "missing2"
+    ],
+  }];
+
+  string example2 = 2 [(validate.rules).string = {
+    in: [
+      "foo",
+      "bar",
+      "baz"
+    ]
+  }];
+
+  map<string, string> example3 = 3 [(validate.rules).map.values.string.min_len = 3];
+
+  map<string, string> example4 = 4 [(validate.rules).map.keys.string = {pattern: "^[^[0-9]A-Za-z]+( [^[0-9]A-Za-z]+)*$"}];
+
+  map<string, string> example5 = 5 [(validate.rules).map.keys.string = {
+    not_in: ["hoge"]
+  }];
+
+  map<string, string> example6 = 6 [(validate.rules).map = {
+    keys: {
+      string: {
+        in: [
+          "foo",
+          "bar"
+        ]
+      }
+    },
+    values: {
+      string: {
+        in: [
+          "baz",
+          "qux"
+        ]
+      }
+    }
+  }];
+
+  string example7 = 7 [(validate.rules).string = {in: ["foo", "bar", "baz"], not_in: ["fizz", "buzz"]}];
+}

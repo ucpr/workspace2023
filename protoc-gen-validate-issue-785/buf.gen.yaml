@@ -1,0 +1,11 @@
+version: v1
+plugins:
+  - plugin: buf.build/bufbuild/validate-go
+    opt:
+      - paths=source_relative
+    out: ./gen
+  - remote: buf.build/protocolbuffers/plugins/go
+    opt:
+      - module=github.com/ucpr/workspace2023/protoc-gen-validate-issue-785
+    out: ./
+
